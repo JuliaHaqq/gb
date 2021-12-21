@@ -100,14 +100,14 @@ AUTH_USER_MODEL = 'authapp.ShopUser'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     },
 # }
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'geekshop',
-        'USER' : 'postgres'
-    },
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': 'geekshop',
+#         'USER' : 'postgres'
+#     },
 
-}
+# }
 
 
 # Password validation
@@ -134,7 +134,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru-ru'
 
-TIME_ZONE = 'Europa/Moscow'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
@@ -148,9 +148,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = (
-    BASE_DIR / 'static',
-)
+ENV_TYPE = os.getenv('ENV_TYPE')
+if ENV_TYPE == 'local':
+    STATICFILES_DIRS = (
+        BASE_DIR / 'static',
+    )
+else:
+    STATIC_ROOT = BASE_DIR / 'static'
 
 MEDIA_URL = '/media/'
 

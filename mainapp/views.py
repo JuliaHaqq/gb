@@ -7,12 +7,12 @@ from django.views.generic import CreateView, UpdateView, DetailView, DeleteView,
 from django.template.loader import render_to_string
 
 
-
 def get_hot_product():
     return random.sample(list(Product.objects.all()), 1)[0]
 
 def get_same_products(hot_product):
-    products_list = Product.objects.filter(category=hot_product.category).exclude(pk=hot_product.pk)[:3]
+    products_list = Product.objects.filter(category=hot_product.category).exclude(pk=hot_product.pk).select_related()[:3]
+    print(products_list.query)
     return products_list
 
 
