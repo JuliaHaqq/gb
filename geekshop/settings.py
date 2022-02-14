@@ -32,7 +32,7 @@ SECRET_KEY = 'django-insecure-*v%#5#bj5ie0d#4v&d=x601&9%80i%yr_3)^=ja*6*7#!cms-%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = (os.getenv('DEBUG', 'False') == 'True')
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*'] 
 
 
 # Application definition
@@ -109,8 +109,8 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': 'geekshop',
-            'USER' : 'postgres'
+            'NAME': 'geekshop', 
+            'USER' : 'postgres' 
         },
     }
 

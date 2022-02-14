@@ -37,6 +37,5 @@ tqdm==4.62.3
 traitlets==5.1.0
 urllib3==1.26.7
 wcwidth==0.2.5
-gunicorn
-#test2
-psycopg2-binary
+gunicorn 
+psycopg2-binary 
