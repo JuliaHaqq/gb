@@ -1,10 +1,10 @@
-from django.shortcuts import get_object_or_404, render, HttpResponse
-from basketapp.models import Basket
-from django.core.paginator import PageNotAnInteger, Paginator, EmptyPage, PageNotAnInteger
-from mainapp.models import Product, ProductCategory
 import random
-from django.views.generic import CreateView, UpdateView, DetailView, DeleteView, ListView
+from django.db.models import Q
+from django.shortcuts import get_object_or_404, render, HttpResponse
+from django.core.paginator import PageNotAnInteger, Paginator, EmptyPage
+from mainapp.models import Product, ProductCategory
 from django.conf import settings
+from django.views.generic import CreateView, UpdateView, DetailView, DeleteView
 from django.core.cache import cache
 from django.views.decorators.cache import cache_page, never_cache
 
@@ -38,9 +38,13 @@ def get_same_products(hot_product):
 
 @never_cache
 def index(request):
+    is_home = Q(category__name='дом')
+    is_office = Q(category__name='офис')
     context = {
         'title': 'Главная',
-        'products': Product.objects.all()[:4]
+        'products': Product.objects.filter(
+            is_home | is_office
+        ),
     }
     return render(request, 'mainapp/index.html', context)
 
