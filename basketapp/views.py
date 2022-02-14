@@ -1,12 +1,18 @@
-from django.contrib import auth
-from django.http import request
-from django.http.response import HttpResponseRedirect, JsonResponse
-from django.shortcuts import get_object_or_404, render
-from basketapp.models import Basket
 
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, render, HttpResponseRedirect
+from basketapp.models import Basket
 from mainapp.models import Product
 from django.contrib.auth.decorators import login_required
 from django.template.loader import render_to_string
+from django.db.models import F
+
+
+def db_profile_by_type(prefix, type, queries):
+   update_queries = list(filter(lambda x: type in x['sql'], queries))
+   print(f'db_profile {type} for {prefix}:')
+   [print(query['sql']) for query in update_queries]
+
 
 @login_required
 def basket(request):
@@ -27,7 +33,7 @@ def add(request, pk):
     if not basket_item:
         basket_item = Basket(product=product_item, user=request.user)
 
-    basket_item.quantity += 1
+    basket_item.quantity += F('quantity') + 1
     basket_item.save() 
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
